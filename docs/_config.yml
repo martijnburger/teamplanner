@@ -4,7 +4,7 @@ description: >-
   coded on twitch.tv and it's goal is to provide a webapplication
   that holds the planning for sportsteams.
 show_downloads: false
-theme: hitchens-theme
+# theme: hitchens-theme
 remote_theme: patdryburgh/hitchens
 # theme: jekyll-theme-cayman
 exclude:
