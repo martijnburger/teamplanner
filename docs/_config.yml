@@ -3,10 +3,11 @@ description: >-
   Teamplanner is an open source project in progress. It is live 
   coded on twitch.tv and it's goal is to provide a webapplication
   that holds the planning for sportsteams.
-show_downloads: false
-# theme: hitchens-theme
 remote_theme: patdryburgh/hitchens
-# theme: jekyll-theme-cayman
+theme: hitchens-theme
+baseurl: /
+url: https://www.teamplanner.net
+github_username: martijnburger
 exclude:
   - .sass-cache/
   - .jekyll-cache/
