@@ -5,6 +5,7 @@ description: >-
   that holds the planning for sportsteams.
 show_downloads: false
 theme: hitchens-theme
+remote_theme: patdryburgh/hitchens
 # theme: jekyll-theme-cayman
 exclude:
   - .sass-cache/
