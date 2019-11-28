@@ -1,2 +1,2 @@
 # teamplanner
-teamplanner.net - planning for multiple teams.
+teamplanner.net - planning for teams.
