@@ -1,0 +1,62 @@
+style: is-dark
+height: is-small
+items:
+  - title: Twitch.tv
+    subtitle: Live coding
+    icon: fab fa-twitch
+    description: >
+      I will delevop this side out and in the open, so much that 
+      during the development of the application I will try to stream
+      my coding process as much as possible. Take a look if I am
+      currently coding, or watch my old streams.
+    call_to_action_name: Watch me now
+    call_to_action_link: https://www.twitch.tv/martijnburger
+  - title: Github
+    subtitle: The code
+    icon: fab fa-github
+    description: >
+      On Github all the code, including this website is available. 
+      Feelfree to fork the repo to use it in your own projects, log 
+      any issues you might find or propose a new fix or feature with 
+      a pull request.
+    call_to_action_name: Find the code
+    call_to_action_link: https://github.com/martijnburger/teamplanner/
+  - title: Slack
+    subtitle: The code
+    icon: fab fa-slack
+    description: >
+      The slack channel is for discussions and questions. It is the easiest
+      and most welcome way to do communication with the community we are 
+      building around this application.
+    call_to_action_name: Join Slack
+    call_to_action_link: https://join.slack.com/t/pastonsol/shared_invite/enQtODU0NDE4Nzc2NDk2LTQyM2U1ODg3YTU2ZTE2MTIxNThkYmM5MzlhNDNlNGNhNzMyNzljNTljZmZjN2NiODFjODE4ZThlNzczNzNiOWM
+  - title: Martijn Burger
+    subtitle: Lead programmer
+    icon: fab fa-linkedin
+    description: >
+      Martijn is the lead developer of this application and also
+      the person that's behind the live streams. If you want to ask
+      martijn something, create a ticket in github or contact him 
+      directly via a linkedin message. 
+    call_to_action_name: Linkedin profiel
+    call_to_action_link: https://www.linkedin.com/in/brgrm/
+  - title: Paston Solutions
+    subtitle: Sponsor
+    icon: far fa-building
+    description: >
+      Paston Solutions is the company owned by Martijn Burger, they
+      deliver a BPM and ETL like solution for the insurance industry
+      called Apollon Advise. If you are interested, feel free to get
+      in touch!
+    call_to_action_name: Website
+    call_to_action_link: https://paston.nl/
+  - title: Roeiploeg Utrecht
+    subtitle: Dutch rowing
+    icon: fa-anchor
+    description: >
+      The primary target for this application is the Dutch sloop
+      rowing club 'Roeiploeg Utrecht' from the beautiful city of
+      Utrecht. The lead dev of this application is a member at
+      this club. 
+    call_to_action_name: Visit the website
+    call_to_action_link: https://www.roeiploegutrecht.nl

@@ -4,4 +4,11 @@
 @import url('https://fonts.googleapis.com/css?family=Quattrocento+Sans&display=swap');
 $primary: #5D2F18;
 $family-primary: 'Quattrocento Sans', sans-serif;
+.footer {
+    background-color: $primary !important;
+}
+.footer-link, .footer-link:hover {
+    color: #FFF;
+    font-size: 1em;
+}
 @import "main";
