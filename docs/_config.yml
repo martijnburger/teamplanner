@@ -3,7 +3,7 @@ description: >-
   Teamplanner is an open source project in progress. It is live 
   coded on twitch.tv and it's goal is to provide a webapplication
   that holds the planning for sportsteams.
-remote_theme: patdryburgh/hitchens
+remote_theme: chrisrhymes/bulma-clean-theme
 url: https://www.teamplanner.net
 github_username: martijnburger
 plugins:
@@ -12,7 +12,7 @@ plugins:
 paginate: 5
 paginate_path: "/page/:num/"
 show_excerpts: true
-feed_icon: /assets/images/logo-small.png
+feed_icon: /assets/img/logo-small.png
 hide_credits: true
 exclude:
   - .sass-cache/
