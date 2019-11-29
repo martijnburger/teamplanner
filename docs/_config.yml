@@ -10,14 +10,18 @@ plugins:
   - jekyll-remote-theme
   - jekyll-paginate
 paginate: 5
-paginate_path: "/page/:num/"
+paginate_path: "/blog/page:num/"
 show_excerpts: true
 feed_icon: /assets/img/logo-small.png
-hide_credits: true
-footer_menu: footer
 sass:
   style: compressed
-  source_dir: _sass
+defaults:
+  - scope:
+      path: ""
+    values:
+      hero_image: "/assets/img/hero.jpeg"  
+      title: "Get on board"
+      subtitle: "with Teamplanner!"   
 exclude:
   - .sass-cache/
   - .jekyll-cache/
