@@ -247,6 +247,7 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   hitchens-theme
+  jekyll-remote-theme
 
 BUNDLED WITH
    2.0.2

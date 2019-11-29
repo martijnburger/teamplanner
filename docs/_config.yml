@@ -4,10 +4,11 @@ description: >-
   coded on twitch.tv and it's goal is to provide a webapplication
   that holds the planning for sportsteams.
 remote_theme: patdryburgh/hitchens
-theme: hitchens-theme
 baseurl: /
 url: https://www.teamplanner.net
 github_username: martijnburger
+plugins:
+  - jekyll-remote-theme
 exclude:
   - .sass-cache/
   - .jekyll-cache/
