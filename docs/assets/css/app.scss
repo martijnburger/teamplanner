@@ -1,0 +1,18 @@
+---
+---
+$primary: hsl(171, 100%, 41%);
+$link: hsl(217, 71%, 53%);
+$info: hsl(204, 86%, 53%);
+$success: hsl(141, 71%, 48%);
+$warning: hsl(48, 100%, 67%);
+$danger: hsl(348, 100%, 61%);
+$dark: hsl(0, 0%, 29%);
+$text: hsl(0, 0%, 29%);
+$background: hsl(0, 0%, 96%);
+$link: hsl(217, 71%, 53%);
+$family-primary: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+
+
+// Import Main CSS file from theme
+@import "main";
