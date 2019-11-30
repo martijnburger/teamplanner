@@ -33,7 +33,7 @@ feed_icon: /assets/img/logo-small.png
 sass:
   style: compressed
   source_dir: _sass
-#google_analytics: UA-code-here
+google_analytics: UA-153629949-1
 markdown: kramdown
 highlighter: rouge
 footer_menu: footer
