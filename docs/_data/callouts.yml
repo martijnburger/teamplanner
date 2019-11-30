@@ -22,7 +22,7 @@ items:
     call_to_action_name: Find the code
     call_to_action_link: https://github.com/martijnburger/teamplanner/
   - title: Slack
-    subtitle: The code
+    subtitle: Communication
     icon: fab fa-slack
     description: >
       The slack channel is for discussions and questions. It is the easiest
