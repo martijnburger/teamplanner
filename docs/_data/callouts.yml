@@ -2,7 +2,7 @@ style: is-dark
 height: is-small
 items:
   - title: Twitch.tv
-    subtitle: Live coding
+    subtitle: Live streams
     icon: fab fa-twitch
     description: >
       I will delevop this side out and in the open, so much that 
@@ -36,8 +36,8 @@ items:
     description: >
       Martijn is the lead developer of this application and also
       the person that's behind the live streams. If you want to ask
-      martijn something, create a ticket in github or contact him 
-      directly via a linkedin message. 
+      him something, send a slack message or contact him via a 
+      linkedin message. 
     call_to_action_name: Linkedin profiel
     call_to_action_link: https://www.linkedin.com/in/brgrm/
   - title: Paston Solutions
