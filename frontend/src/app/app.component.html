@@ -1,0 +1,13 @@
+<div *ngIf="event$|async as events else loading">
+  <ul>
+    <li *ngFor="let event of events; let i = index">
+      Naam: {{event.name}}, Datum: {{event.date | date}}<br>
+      Members: {{members(event.id) | async | json}}
+    </li>
+  </ul>
+</div>
+<router-outlet></router-outlet>
+
+<ng-template #loading>
+  <div>Loading...</div>
+</ng-template>

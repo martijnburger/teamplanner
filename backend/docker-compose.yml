@@ -1,0 +1,41 @@
+version: "3.7"
+services:
+  backend:
+    build: .
+    image: teamplanner/backend
+    ports:
+      - 8080:8080
+    links:
+      - postgres
+      - elasticsearch
+    depends_on:
+      - postgres
+      - elasticsearch
+    environment: 
+      - QUARKUS_DATASOURCE_URL=jdbc:postgresql://postgres:5432/teamplanner
+      - QUARKUS_HIBERNATE-SEARCH_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  postgres:
+    image: postgres:12.1-alpine
+    ports:
+      - 5432:5432
+    environment: 
+      - POSTGRES_DB=teamplanner
+      - POSTGRES_USER=tp_admin
+      - POSTGRES_PASSWORD=t3amp1anner
+  elasticsearch:
+    image: elasticsearch:7.5.1
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment: 
+      - discovery.type=single-node
+  kibana:
+    image: kibana:7.5.1
+    ports: 
+      - 5601:5601
+    links: 
+      - elasticsearch
+    depends_on: 
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
