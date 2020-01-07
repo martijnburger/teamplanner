@@ -6,6 +6,7 @@ import { TeamplannerRoutingModule } from './teamplanner-routing.module';
 import { TeamplannerComponent } from './teampanner.component';
 import { EventComponent } from './event/event.component';
 import { EventsOverviewComponent } from './events-overview/events-overview.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { EventsOverviewComponent } from './events-overview/events-overview.compo
   imports: [
     BrowserModule,
     TeamplannerRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [TeamplannerComponent]
 })
