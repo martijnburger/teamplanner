@@ -1,1 +1,12 @@
-<p>event works!</p>
+<div *ngIf="member$|async as members else loading">
+    <ul>
+        <li *ngFor="let member of members">
+        Naam: {{member.name}}, Available: {{member.available}}, Planned: {{member.planned}}, Comment: {{member.comment}}<br>
+        </li>
+    </ul>
+</div>
+  
+<ng-template #loading>
+    <div>Loading...</div>
+</ng-template>
+  
