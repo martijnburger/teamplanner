@@ -2,7 +2,7 @@
   <ul>
     <li *ngFor="let event of events">
       Naam: {{event.name}}, Datum: {{event.date | date}}<br>
-      <app-event eventId={{event.id}}></app-event>
+      <teamplanner-event eventId={{event.id}}></teamplanner-event>
     </li>
   </ul>
 </div>

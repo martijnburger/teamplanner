@@ -3,17 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
-import { IEvent } from './event';
-import { IItem } from './item';
-import { IMember } from './member';
+import { IEvent } from '../model/event';
+import { IItem } from '../model/item';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html'
+  selector: 'teamplanner-events-overview',
+  templateUrl: 'events-overview.component.html'
 })
-export class AppComponent implements OnInit {
+export class EventsOverviewComponent implements OnInit {
 
   event$: Observable<IEvent[]>;
 

@@ -12,7 +12,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "tp",
+      "prefix": "teamplanner",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
