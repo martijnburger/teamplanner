@@ -1,0 +1,259 @@
+---
+openapi: 3.0.1
+info:
+  title: Teamplanner API
+  contact:
+    name: Teamplanner API Support
+    url: https://www.teamplanner.net/about.html
+    email: nope@teamplanner.net
+  license:
+    name: GPLv3
+    url: https://www.gnu.org/licenses/gpl-3.0.txt
+  version: "1.0"
+tags:
+- name: Read only user operations
+  description: These operations can be executed by any normal user. All operations should be for viewing non-personal data.
+paths:
+  /api/v1.0/events:
+    get:
+      tags:
+      - Read only user operations
+      summary: List all events that are created.
+      description: The object contains the metadata and data for the list of events. The metadata gives information about the size of the query, and the size and number of the pages that can be queried. The query parameters that can be provided are all optional and can indicate the page number and page size of the query that is returned. In the search parameter field a full text search term can be provided on which the query will be filtered. When there is an illegal search pattern provided the server returns a 404 error. In all other normal operating situations a 200 Ok will be returned with a (possibly empty) list of events.
+      parameters:
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      - name: search
+        in: query
+        schema:
+          type: string
+      responses:
+        404:
+          description: Search pattern not accepted.
+        200:
+          description: OK
+          content:
+            application/json: {}
+    post:
+      summary: Create a new event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json: {}
+  /api/v1.0/events/{id}:
+    get:
+      tags:
+      - Read only user operations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+    put:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        200:
+          description: OK
+    delete:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+    patch:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        200:
+          description: OK
+  /api/v1.0/events/{id}/members:
+    get:
+      tags:
+      - Read only user operations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+    post:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+  /api/v1.0/member-events:
+    get:
+      tags:
+      - Read only user operations
+      summary: A list of members
+      description: Read a parameterized list of all events, the list can be parameterized
+        with integer values for pageSize and pageNumber, and a string value for a
+        search pattern.
+      parameters:
+      - name: pageNumber
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      - name: pattern
+        in: query
+        schema:
+          type: string
+      responses:
+        404:
+          description: Pattern not accepted.
+        200:
+          description: OK
+          content:
+            application/json: {}
+    post:
+      summary: Create a new event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Member'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json: {}
+  /api/v1.0/member-events/{id}:
+    get:
+      tags:
+      - Read only user operations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+    put:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Member'
+      responses:
+        200:
+          description: OK
+    delete:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+    patch:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Member'
+      responses:
+        200:
+          description: OK
+components:
+  schemas:
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        date:
+          type: array
+          items:
+            type: number
+    Member:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        available:
+          type: string
+          enum:
+            - AVAILABLE
+            - NOT_AVAILABLE
+            - WAITING
+        planned:
+          type: string
+          enum:
+            - ACCEPTED
+            - REJECTED
+            - SKIPPED
+            - WAITING
+        comment:
+          type: string

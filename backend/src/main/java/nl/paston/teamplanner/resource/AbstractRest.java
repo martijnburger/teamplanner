@@ -13,6 +13,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -72,21 +73,21 @@ public abstract class AbstractRest<T extends PanacheEntity> {
     }
 
     @GET
-    public Response readAll(@QueryParam("pattern") String pattern, @QueryParam("pageSize") int pageSize,
+    public Response readAll(@QueryParam("search") String search, @QueryParam("pageSize") int pageSize,
             @QueryParam("pageNumber") int pageNumber) {
         pageSize = pageSize > 0 ? pageSize : defaultPageSize;
         pageNumber = pageNumber > 0 ? pageNumber : 1;
-        if (pattern == null)
-            pattern = "";
+        if (search == null)
+            search = "";
         try {
-            // Use the pattern, Luke!
-            List<T> list = getSearchQuery(pattern).fetchHits((pageNumber - 1) * pageSize, pageSize);
-            long count = getSearchQuery(pattern).fetchTotalHitCount();
+            // Use the search, Luke!
+            List<T> list = getSearchQuery(search).fetchHits((pageNumber - 1) * pageSize, pageSize);
+            long count = getSearchQuery(search).fetchTotalHitCount();
             int pageCount = (Math.toIntExact(count) + pageSize + 1) / pageSize;
-            return createEntitiesResponse(list, pattern, pageSize, pageNumber, count, pageCount);
+            return createEntitiesResponse(list, search, pageSize, pageNumber, count, pageCount);
         } catch (SearchException ex) {
             log.info("Method readAll threw a SearchException", ex);
-            return Response.status(Status.CONFLICT).type(MediaType.TEXT_PLAIN).entity("Pattern not accepted.").build();
+            return Response.status(Status.CONFLICT).type(MediaType.TEXT_PLAIN).entity("Search pattern not accepted.").build();
         } catch (IOException ex) {
             log.error("Method readTreeWithView cannot map!", ex);
             return Response.status(Status.SERVICE_UNAVAILABLE).type(MediaType.TEXT_PLAIN).entity("Please contact the administrator.").build();
@@ -107,6 +108,19 @@ public abstract class AbstractRest<T extends PanacheEntity> {
     @Path("{id}")
     @Transactional
     public Response update(@PathParam("id") final Long id, final T entity) {
+        T managed = findById(id);
+        if (managed == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+        managed = entity;
+        managed.persist();
+        return Response.ok().build();
+    }
+
+    @PATCH
+    @Path("{id}")
+    @Transactional
+    public Response modify(@PathParam("id") final Long id, final T entity) {
         T managed = findById(id);
         if (managed == null) {
             return Response.status(Status.NOT_FOUND).build();
