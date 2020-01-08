@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class EventComponent implements OnInit {
 
-  member$: Observable<IMember[]>;
+  public member$: Observable<IMember[]>;
 
   @Input()
   eventId: string;

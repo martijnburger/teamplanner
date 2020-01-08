@@ -1,12 +1,10 @@
-<div *ngIf="member$|async as members else loading">
-    <ul>
-        <li *ngFor="let member of members">
-        Naam: {{member.name}}, Available: {{member.available}}, Planned: {{member.planned}}, Comment: {{member.comment}}<br>
-        </li>
-    </ul>
+<div fxLayout="column" *ngIf="member$|async as members else loading">
+  <div *ngFor="let member of members">
+    <teamplanner-member-event fxFlex [eventMember]="member">
+    </teamplanner-member-event>
+  </div>
 </div>
-  
+
 <ng-template #loading>
-    <mat-spinner style="margin:0 auto;" diameter=50></mat-spinner>
+  <mat-spinner style="margin:0 auto;" diameter=50></mat-spinner>
 </ng-template>
-  

@@ -1,0 +1,5 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" [ngStyle]="{ 'background-color': getBackgroundColor(), 'color': getColor() }">
+  <span fxLayoutAlign="center center" [ngStyle]="{ 'background-color': 'orange', 'color': 'pink' }"><i class="material-icons">{{getIcon()}}</i></span>
+  <span fxLayoutAlign="center center">{{eventMember.name}}</span>
+  <span fxLayoutAlign="center center"><button *ngIf="eventMember.comment" (click)="showComment()" mat-icon-button matTooltip="{{shortComment}}" matTooltipPosition="after"><i class="material-icons">more_horiz</i></button></span>
+</div>
