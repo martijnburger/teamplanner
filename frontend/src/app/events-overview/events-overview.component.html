@@ -1,11 +1,16 @@
 <div *ngIf="event$|async as events else loading">
-  <ul>
-    <li *ngFor="let event of events">
-      Naam: {{event.name}}, Datum: {{event.date | date}}<br>
-      <teamplanner-event eventId={{event.id}}></teamplanner-event>
-    </li>
-  </ul>
+  <mat-grid-list cols="2" rowHeight="3:1">
+    <mat-grid-tile *ngFor="let event of events">
+      <mat-card>
+        <mat-card-title>{{event.date | date: 'longDate' }}</mat-card-title>
+        <mat-card-subtitle>{{event.name}}</mat-card-subtitle>
+        <mat-card-content>
+          <teamplanner-event eventId={{event.id}}></teamplanner-event>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
 <ng-template #loading>
-  <div>Loading...</div>
+  <mat-spinner style="margin:0 auto;" diameter=100></mat-spinner>
 </ng-template>
