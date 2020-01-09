@@ -31,47 +31,37 @@ export class MemberEventComponent implements OnInit {
     });
   }
 
-  getBackgroundColor() {
+  color(): string[] {
     switch (this.eventMember.planned) {
-      case 'REJECTED': return 'red';
-      case 'WAITING': return 'yellow';
-      case 'ACCEPTED': return 'green';
-      case 'SKIPPED': return 'grey';
-      default: return 'blue';
+      case 'REJECTED': return ['rgba(244, 67, 54,.87)', 'rgba(255,255,255,.87)'];
+      case 'WAITING': return ['rgba(255, 215, 64,.87)', 'rgba(0,0,0,.87)'];
+      case 'ACCEPTED': return ['rgba(103, 58, 183,.87)', 'rgba(255,255,255,.87)'];
+      case 'SKIPPED': return ['rgba(244, 67, 54, 0.26)', 'rgba(255,255,255,.87)'];
+      default: return ['rgba(244, 67, 54,.87)', 'rgba(255,255,255,.87)'];
     }
   }
 
-  getColor() {
-    switch (this.eventMember.planned) {
-      case 'REJECTED': return '#fbfbfb';
-      case 'WAITING': return '#f00';
-      case 'ACCEPTED': return '#fbfbfb';
-      case 'SKIPPED': return 'purple';
-      default: return 'white';
-    }
-  }
-
-  getIcon() {
+  icon(): string[] {
     switch (this.eventMember.available) {
-      case 'AVAILABLE': return 'done';
-      case 'NOT_AVAILABLE': return 'clear';
-      case 'WAITING': return 'schedule';
-      default: return 'priority_high';
+      case 'AVAILABLE': return ['done', 'primary'];
+      case 'NOT_AVAILABLE': return ['clear', 'warn'];
+      case 'WAITING': return ['schedule', 'accent'];
+      default: return ['priority_high', 'warn'];
+    }
+  }
+
+  changeState() {
+    if (this.eventMember.available === 'AVAILABLE') {
+      this.eventMember.available = 'NOT_AVAILABLE';
+    } else {
+      this.eventMember.available = 'AVAILABLE';
     }
   }
 
 }
 
 @Component({
-  template: `
-  <h1 mat-dialog-title>Opmerkingen</h1>
-  <div mat-dialog-content>
-    {{data.comment}}
-  </div>
-  <div mat-dialog-actions>
-     <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
-  </div>
-  `
+  templateUrl: 'comment-dialog.component.html'
 })
 export class CommentDialogComponent {
 

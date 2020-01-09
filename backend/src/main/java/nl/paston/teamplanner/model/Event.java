@@ -32,6 +32,8 @@ public class Event extends PanacheEntity {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     public LocalDate date;
+
+    public boolean planned;
     
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

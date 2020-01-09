@@ -1,4 +1,4 @@
-<div fxLayout="column" *ngIf="member$|async as members else loading">
+<div fxLayout="column" *ngIf="member$|async as members else loading"  fxLayoutGap="2px">
   <div *ngFor="let member of members">
     <teamplanner-member-event fxFlex [eventMember]="member">
     </teamplanner-member-event>

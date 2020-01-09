@@ -1,12 +1,23 @@
-<div fxLayout="row" *ngIf="event$|async as events else loading">
-    <div fxFlex *ngFor="let event of events">
-            <h3>{{event.date | date: 'longDate' }}</h3>
-            <p>{{event.name}}</p>
-            <p>
-                <teamplanner-event [eventId]="event.id"></teamplanner-event>
-            </p>
+<div fxLayout="row">
+  <div class="navigator">&lt;</div>
+  <div fxLayout="row wrap" fxLayoutGap="20px" *ngIf="event$|async as events else loading">
+    <div fxFlex *ngFor="let event of events" class="event-header">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button *ngIf="event.planned" mat-mini-fab color="primary"><i class="material-icons">done</i></button>
+        <button *ngIf="!event.planned" mat-mini-fab color="warn"><i class="material-icons">clear</i></button>
+        <div fxLayout="column">
+            <div class="event-date">{{event.date | date: 'longDate' }}</div>
+            <div class="event-name">{{event.name}}</div>      
+        </div>
+        <span style="min-width: 43px;"></span>
+      </div>
+      <p>
+        <teamplanner-event [eventId]="event.id"></teamplanner-event>
+      </p>
     </div>
+  </div>
+  <div class="navigaro">&gt;</div>
 </div>
 <ng-template #loading>
-    <mat-spinner style="margin:0 auto;" diameter=100></mat-spinner>
+  <mat-spinner style="margin:0 auto;" diameter=100></mat-spinner>
 </ng-template>
