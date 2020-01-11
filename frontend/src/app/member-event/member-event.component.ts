@@ -31,13 +31,13 @@ export class MemberEventComponent implements OnInit {
     });
   }
 
-  color(): string[] {
+  color(): string {
     switch (this.eventMember.planned) {
-      case 'REJECTED': return ['rgba(244, 67, 54,.87)', 'rgba(255,255,255,.87)'];
-      case 'WAITING': return ['rgba(255, 215, 64,.87)', 'rgba(0,0,0,.87)'];
-      case 'ACCEPTED': return ['rgba(103, 58, 183,.87)', 'rgba(255,255,255,.87)'];
-      case 'SKIPPED': return ['rgba(244, 67, 54, 0.26)', 'rgba(255,255,255,.87)'];
-      default: return ['rgba(244, 67, 54,.87)', 'rgba(255,255,255,.87)'];
+      case 'REJECTED': return 'rejected';
+      case 'WAITING': return 'waiting';
+      case 'ACCEPTED': return 'accepted';
+      case 'SKIPPED': return 'skipped';
+      default: return 'default';
     }
   }
 

@@ -9,3 +9,29 @@ span {
     min-width: 43px;
     height: 42px;
 }
+
+.rejected {
+    background-color: rgba(244, 67, 54,0.87);
+    color: rgba(255,255,255,0.87);
+    text-decoration: line-through;
+}
+
+.waiting {
+    background-color: rgba(255, 215, 64,0.87);
+    color: rgba(0,0,0,0.87);
+}
+
+.accepted {
+    background-color: rgba(103, 58, 183,0.87);
+    color: rgba(255,255,255,0.87);
+}
+
+.skipped {
+    background-color: rgba(244, 67, 54, 0.26);
+    color: rgba(255,255,255,0.87);
+}
+
+.default {
+    background-color: rgba(244, 67, 54,0.87);
+    color: rgba(255,255,255,0.87);
+}
