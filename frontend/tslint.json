@@ -13,6 +13,7 @@
       true,
       "attribute",
       "tp",
+      ".carousel-item",
       "camelCase"
     ],
     "component-selector": [

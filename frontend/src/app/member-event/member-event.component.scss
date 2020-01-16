@@ -1,13 +1,14 @@
-div {
-    height: 44px;
-    width: 244px;
+section {
     border-radius: 20px 5px;
-    text-align: center;
 }
 
-span {
-    min-width: 43px;
-    height: 42px;
+section>span {
+    min-width: 42px;
+    height: 45px;
+}
+
+.member-name {
+    text-align: center;
 }
 
 .rejected {

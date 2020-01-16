@@ -1,0 +1,15 @@
+<section class="carousel-wrapper" [ngStyle]="carouselWrapperStyle" fxFlexLayout="column" fxLayoutAlign="space-between">
+  <button fxFlex [disabled]="isPrev()" (click)="prev()" class="left-paddle paddle">
+    &lt;
+  </button>
+  <div class="carousel-inner" #carousel>
+    <div fxFlex *ngFor="let item of items;" class="carousel-item">
+      <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
+    </div>
+  </div>
+  <button fxFlex [disabled]="isNext()" (click)="next()" class="right-paddle paddle">
+    &gt;
+  </button>
+</section>
+<div class="paddles">
+</div>

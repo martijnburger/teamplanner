@@ -14,6 +14,9 @@ import {
 import { registerLocaleData } from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
 import { MemberEventComponent, CommentDialogComponent } from './member-event/member-event.component';
+import { CarouselComponent } from './carousel/carousel-component';
+import { CarouselItemDirective } from './carousel/carousel-item-directive';
+import { CarouselItemElementDirective } from './carousel/carousel-item-element-directive';
 
 registerLocaleData(localeNl);
 
@@ -23,7 +26,10 @@ registerLocaleData(localeNl);
     EventsOverviewComponent,
     EventComponent,
     MemberEventComponent,
-    CommentDialogComponent
+    CommentDialogComponent,
+    CarouselComponent,
+    CarouselItemDirective,
+    CarouselItemElementDirective
   ],
   entryComponents: [
     CommentDialogComponent
