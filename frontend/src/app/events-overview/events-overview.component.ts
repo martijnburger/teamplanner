@@ -10,8 +10,7 @@ import { IItem } from '../model/item';
 
 @Component({
   selector: 'teamplanner-events-overview',
-  templateUrl: 'events-overview.component.html',
-  styleUrls: [ 'events-overview.component.scss' ]
+  templateUrl: 'events-overview.component.html'
 })
 export class EventsOverviewComponent implements OnInit {
 

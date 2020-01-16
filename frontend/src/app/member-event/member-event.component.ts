@@ -25,7 +25,7 @@ export class MemberEventComponent implements OnInit {
   }
 
   showComment() {
-    const dialogRef = this.dialog.open(CommentDialogComponent, {
+    this.dialog.open(CommentDialogComponent, {
       width: '250px',
       data: this.eventMember
     });

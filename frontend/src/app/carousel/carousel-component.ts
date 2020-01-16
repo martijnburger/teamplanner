@@ -8,8 +8,7 @@ import { CarouselItemElementDirective } from './carousel-item-element-directive'
 // https://netbasal.com/building-a-simple-carousel-component-with-angular-3a94092b7080
 @Component({
     selector: 'teamplanner-carousel',
-    templateUrl: 'carousel-component.html',
-    styleUrls: [ 'carousel-component.scss' ]
+    templateUrl: 'carousel-component.html'
 })
 export class CarouselComponent implements AfterViewInit {
     @ContentChildren(CarouselItemDirective) items: QueryList<CarouselItemDirective>;
