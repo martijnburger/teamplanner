@@ -3,6 +3,7 @@ package nl.paston.teamplanner.resource;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.UriBuilder;
 
+import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.mapper.orm.Search;
 
@@ -28,7 +29,7 @@ public class MemberEventRest extends AbstractRest<MemberEvent> {
 
     @Override
     SearchQuery<MemberEvent> getSearchQuery(String simpleQueryString) {
-        return Search.session(em).search(MemberEvent.class).predicate(f -> f.matchAll()).toQuery();
+        return Search.session(em).search(MemberEvent.class).predicate(SearchPredicateFactory::matchAll).toQuery();
     }
 
 }

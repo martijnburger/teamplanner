@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.mapper.orm.Search;
 
@@ -37,8 +38,8 @@ public class EventRest extends AbstractRest<Event> {
 
     @Override
     SearchQuery<Event> getSearchQuery(String simpleQueryString) {
-        if (simpleQueryString == null || simpleQueryString.trim() == "") {
-            return Search.session(em).search(Event.class).predicate(f -> f.matchAll()).toQuery();
+        if (simpleQueryString == null || "".equals(simpleQueryString.trim())) {
+            return Search.session(em).search(Event.class).predicate(SearchPredicateFactory::matchAll).toQuery();
         }
         return Search.session(em).search(Event.class).predicate(f -> f.simpleQueryString().field("name").matching(simpleQueryString)).toQuery();
     }

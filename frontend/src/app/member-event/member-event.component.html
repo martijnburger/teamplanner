@@ -1,5 +1,7 @@
 <section [class]="color()" fxLayout="row" fxLayoutAlign="space-between">
-  <span><button (click)="changeState()" mat-mini-fab [color]="icon()[1]"><i class="material-icons">{{icon()[0]}}</i></button></span>
+  <span><button (click)="changeState()" mat-mini-fab [color]="icon()[1]"><i class="material-icons"
+        aria-hidden="true">{{icon()[0]}}</i></button></span>
   <span fxFlex class="member-name">{{eventMember.name}}</span>
-  <span><button *ngIf="eventMember.comment" (click)="showComment()" mat-icon-button matTooltip="{{shortComment}}" matTooltipPosition="after"><i class="material-icons">more_horiz</i></button></span>
+  <span><button *ngIf="eventMember.comment" (click)="showComment()" mat-icon-button matTooltip="{{shortComment}}"
+      matTooltipPosition="after"><i class="material-icons" aria-hidden="true">more_horiz</i></button></span>
 </section>

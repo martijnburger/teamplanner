@@ -23,7 +23,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.Response.Status;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -34,15 +33,14 @@ import org.hibernate.search.util.common.SearchException;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.runtime.StartupEvent;
 import lombok.extern.slf4j.Slf4j;
-import nl.paston.teamplanner.model.Views;
 
 @Slf4j
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public abstract class AbstractRest<T extends PanacheEntity> {
 
-    public static final int defaultPageSize = 20;
-    public static final String defaultSortBy = "id";
+    public static final int DEFAULT_PAGE_SIZE = 20;
+    public static final String DEFAULT_SORT_BY = "id";
 
     abstract T findById(Long id);
 
@@ -75,7 +73,7 @@ public abstract class AbstractRest<T extends PanacheEntity> {
     @GET
     public Response readAll(@QueryParam("search") String search, @QueryParam("pageSize") int pageSize,
             @QueryParam("pageNumber") int pageNumber) {
-        pageSize = pageSize > 0 ? pageSize : defaultPageSize;
+        pageSize = pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
         pageNumber = pageNumber > 0 ? pageNumber : 1;
         if (search == null)
             search = "";
@@ -121,14 +119,7 @@ public abstract class AbstractRest<T extends PanacheEntity> {
     @Path("{id}")
     @Transactional
     public Response modify(@PathParam("id") final Long id, final T entity) {
-        T managed = findById(id);
-        if (managed == null) {
-            return Response.status(Status.NOT_FOUND).build();
-        }
-        // Itterate over fields
-        managed = entity;
-        managed.persist();
-        return Response.ok().build();
+        return update(id, entity);
     }
 
     @DELETE
@@ -148,16 +139,10 @@ public abstract class AbstractRest<T extends PanacheEntity> {
                 .queryParam("pageNumber", pageNumber).build().toString();
     }
 
-    // This is a workaround for issue
-    // https://github.com/FasterXML/jackson-databind/issues/1687
-    private JsonNode readTreeWithView(final Class<?> serializationView, final Object value) throws IOException {
-        return mapper.readTree(mapper.writerWithView(serializationView).writeValueAsString(value));
-    }
-
     public Response createEntitiesResponse(List<?> list, String pattern, int pageSize, int pageNumber, long count,
             int pageCount) throws IOException {
         final ObjectNode json = mapper.createObjectNode();
-        json.set("items", readTreeWithView(Views.Public.class, list));
+        json.set("items", mapper.valueToTree(list));
         json.put("count", count);
         json.put("pageSize", pageSize);
         json.put("pageCount", pageCount);

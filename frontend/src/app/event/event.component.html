@@ -1,7 +1,7 @@
   <section *ngIf="member$|async as members else loading" fxLayout="column" fxLayoutGap="2px">
     <header fxLayout="row">
-      <button *ngIf="event.planned" mat-mini-fab color="primary"><i class="material-icons">done</i></button>
-      <button *ngIf="!event.planned" mat-mini-fab color="warn"><i class="material-icons">clear</i></button>
+      <button *ngIf="event.planned" mat-mini-fab color="primary"><i class="material-icons" aria-hidden="true">done</i></button>
+      <button *ngIf="!event.planned" mat-mini-fab color="warn"><i class="material-icons" aria-hidden="true">clear</i></button>
       <section fxFlex>{{event.date | date: 'longDate' }}<br>{{event.name}}</section>
     </header>
     <div *ngFor="let member of members">
