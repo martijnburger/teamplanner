@@ -2,6 +2,8 @@ package nl.paston.teamplanner.resource;
 
 import java.net.URI;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,6 +22,11 @@ import nl.paston.teamplanner.model.MemberEvent;
 
 @Path("events")
 public class EventRest extends AbstractRest<Event> {
+
+    @Inject
+    public EventRest(EntityManager em) {
+        super(em);
+    }
 
     @Override
     Event findById(Long id) {

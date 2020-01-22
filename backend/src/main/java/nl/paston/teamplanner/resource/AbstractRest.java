@@ -1,6 +1,5 @@
 package nl.paston.teamplanner.resource;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -50,11 +49,14 @@ public abstract class AbstractRest<T extends PanacheEntity> {
 
     abstract SearchQuery<T> getSearchQuery(String simpleQueryString);
 
-    @Inject
-    EntityManager em;
+    protected EntityManager em;
 
     @Inject
     ObjectMapper mapper;
+
+    public AbstractRest(EntityManager em) {
+        this.em = em;
+    }
 
     @Transactional
     void onStart(@Observes StartupEvent ev) throws InterruptedException {
@@ -86,7 +88,7 @@ public abstract class AbstractRest<T extends PanacheEntity> {
         } catch (SearchException ex) {
             log.info("Method readAll threw a SearchException", ex);
             return Response.status(Status.CONFLICT).type(MediaType.TEXT_PLAIN).entity("Search pattern not accepted.").build();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             log.error("Method readTreeWithView cannot map!", ex);
             return Response.status(Status.SERVICE_UNAVAILABLE).type(MediaType.TEXT_PLAIN).entity("Please contact the administrator.").build();
         }
@@ -140,7 +142,7 @@ public abstract class AbstractRest<T extends PanacheEntity> {
     }
 
     public Response createEntitiesResponse(List<?> list, String pattern, int pageSize, int pageNumber, long count,
-            int pageCount) throws IOException {
+            int pageCount) {
         final ObjectNode json = mapper.createObjectNode();
         json.set("items", mapper.valueToTree(list));
         json.put("count", count);

@@ -1,28 +1,42 @@
 package nl.paston.teamplanner.resource;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
+import javax.ws.rs.core.UriBuilder;
 
+import nl.paston.teamplanner.model.MemberEvent;
+
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import javax.persistence.EntityManager;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.quarkus.test.common.QuarkusTestResource;
-import io.quarkus.test.h2.H2DatabaseTestResource;
-import io.quarkus.test.junit.QuarkusTest;
-
-@QuarkusTest @QuarkusTestResource(H2DatabaseTestResource.class)
 public class MemberEventRestTest {
 
+    EntityManager em;
+    MemberEventRest mer = new MemberEventRest(em);
+
     @Test
-    public void dummyTest() {
-        given().when().get("/member-events?pageSize=5")
-            .then().statusCode(200)
-                .body(
-                    "items", hasSize(5),
-                    "count", is(25), 
-                    "pageSize", is(5),
-                    "pageCount", is(5)
-                );
+    public void getUriTest_ok() {
+        assertEquals(mer.getUri().build().getPath(), "member-events");
+    }
+    
+    @Test
+    public void getTableNameTest_ok() {
+        assertEquals(mer.getTableName(), "MemberEvent");
     }
 
+    @Test
+    public void findByIdTest_ok() {
+        MemberEvent testMemberEvent = new MemberEvent();
+        testMemberEvent.name = "foo";
+        em = mock(EntityManager.class);
+        mer = new MemberEventRest(em);
+        when(em.find(MemberEvent.class, 1L)).thenReturn(testMemberEvent);
+        assertEquals(mer.findById(1L).name, "foo"); 
+    }
+    
 }

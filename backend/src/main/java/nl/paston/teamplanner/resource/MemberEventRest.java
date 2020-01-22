@@ -1,5 +1,7 @@
 package nl.paston.teamplanner.resource;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.UriBuilder;
 
@@ -12,9 +14,14 @@ import nl.paston.teamplanner.model.MemberEvent;
 @Path("member-events")
 public class MemberEventRest extends AbstractRest<MemberEvent> {
 
+    @Inject
+    public MemberEventRest(EntityManager em) {
+        super(em);
+    }
+
     @Override
     MemberEvent findById(Long id) {
-        return MemberEvent.findById(id);
+        return em.find(MemberEvent.class, id);
     }
 
     @Override
