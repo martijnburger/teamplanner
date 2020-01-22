@@ -1,7 +1,5 @@
-<?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" 
-  xmlns="http://maven.apache.org/POM/4.0.0" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" ?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.paston</groupId>
   <artifactId>teamplanner-backend</artifactId>
@@ -17,13 +15,22 @@
     <maven.compiler.target>11</maven.compiler.target>
     <quarkus.platform.version>1.2.0.CR1</quarkus.platform.version>
     <elasticsearch-server.version>7.5.1</elasticsearch-server.version>
+    <mockito.version>3.2.4</mockito.version>
+    <lombok.version>1.18.10</lombok.version>
     <quarkus-plugin.version>1.2.0.CR1</quarkus-plugin.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <surefire-plugin.version>3.0.0-M4</surefire-plugin.version>
     <docker-plugin.version>0.31.0</docker-plugin.version>
     <elasticsearch-plugin.version>6.14</elasticsearch-plugin.version>
-    <mockito.version>3.2.4</mockito.version>
-    <lombok.version>1.18.10</lombok.version>
+    <jacoco-plugin.version>0.8.5</jacoco-plugin.version>
+    <sonar.sources>src/main</sonar.sources>
+    <sonar.tests>src/test</sonar.tests>
+    <!-- Sonar-JaCoCo properties -->
+    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <!-- <sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath> -->
+    <!-- <sonar.coverage.jacoco.xmlReportPaths>target/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths> -->
+    <sonar.language>java</sonar.language>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -107,6 +114,8 @@
         <version>${surefire-plugin.version}</version>
         <configuration>
           <skipTests>${skipUTs}</skipTests>
+          <forkCount>1</forkCount>
+          <reuseForks>true</reuseForks>
           <systemProperties>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
           </systemProperties>
@@ -195,34 +204,30 @@
           </execution>
         </executions>
       </plugin>
-        <!-- <plugin>
-          <groupId>com.github.alexcojocaru</groupId>
-          <artifactId>elasticsearch-maven-plugin</artifactId>
-          <version>${elasticsearch-plugin.version}</version>
-          <configuration>
-              <skip>${skipITs}</skip>
-              <version>${elasticsearch-server.version}</version>
-              <timeout>90</timeout>
-              <pathConf>${project.build.directory}/test-classes/elasticsearch-maven-plugin/</pathConf>
-              <autoCreateIndex>true</autoCreateIndex>
-          </configuration>
-          <executions>
-              <execution>
-                  <id>start-elasticsearch</id>
-                  <phase>process-test-resources</phase>
-                  <goals>
-                      <goal>runforked</goal>
-                  </goals>
-              </execution>
-              <execution>
-                  <id>stop-elasticsearch</id>
-                  <phase>post-integration-test</phase>
-                  <goals>
-                      <goal>stop</goal>
-                  </goals>
-              </execution>
-          </executions>
-      </plugin> -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-plugin.version}</version>
+        <configuration>
+          <destFile>${sonar.jacoco.reportPath}</destFile>
+          <!-- <append>true</append> -->
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
