@@ -31,6 +31,16 @@ public class AbstractRestImpl extends AbstractRest<TestEntity> {
         return null;
     }
 
+    @Override
+    Class<TestEntity> getEntityClass() {
+        return TestEntity.class;
+    }
+
+    @Override
+    void copyFields(TestEntity source, TestEntity target) {
+        target.foo = source.foo;
+    }
+
 
     
 }

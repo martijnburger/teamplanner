@@ -34,6 +34,20 @@ public class MemberEventRest extends AbstractRest<MemberEvent> {
     }
 
     @Override
+    Class<MemberEvent> getEntityClass() {
+        return MemberEvent.class;
+    }
+
+    @Override
+    void copyFields(MemberEvent source, MemberEvent target) {
+        // The event a member belongs to cannot be changed
+        target.name = source.name;
+        target.available = source.available;
+        target.planned = source.planned;
+        target.comment = source.comment;
+    }
+
+    @Override
     SearchQuery<MemberEvent> getSearchQuery(String simpleQueryString) {
         return Search.session(em).search(MemberEvent.class).where(f -> f.matchAll()).toQuery();
     }
