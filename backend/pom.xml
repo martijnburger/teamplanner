@@ -20,7 +20,7 @@
     <elasticsearch-server.version>7.5.1</elasticsearch-server.version>
     <mockito.version>3.2.4</mockito.version>
     <lombok.version>1.18.10</lombok.version>
-    <quarkus-plugin.version>1.2.0.CR1</quarkus-plugin.version>
+    <quarkus-plugin.version>1.13.7.Final</quarkus-plugin.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <surefire-plugin.version>3.0.0-M4</surefire-plugin.version>
     <docker-plugin.version>0.31.0</docker-plugin.version>
