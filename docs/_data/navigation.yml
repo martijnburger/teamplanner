@@ -3,12 +3,6 @@
   dropdown:
     - name: Player
       link: /user-stories/player.html
-    - name: Captain
-      link: /user-stories/captain.html
-    - name: Master
-      link: /user-stories/master.html
-    - name: Admin
-      link: /user-stories/admin.html
 - name: About
   link: /about.html
 - name: Blog
