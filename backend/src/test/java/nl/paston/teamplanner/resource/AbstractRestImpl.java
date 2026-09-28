@@ -1,7 +1,7 @@
 package nl.paston.teamplanner.resource;
 
-import javax.persistence.EntityManager;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.core.UriBuilder;
 
 import org.hibernate.search.engine.search.query.SearchQuery;
 

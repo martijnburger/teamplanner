@@ -3,24 +3,24 @@ package nl.paston.teamplanner.resource;
 import java.net.URI;
 import java.util.List;
 
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.Response.Status;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -30,10 +30,9 @@ import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.util.common.SearchException;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.logging.Log;
 import io.quarkus.runtime.StartupEvent;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public abstract class AbstractRest<T extends PanacheEntity> {
@@ -86,10 +85,10 @@ public abstract class AbstractRest<T extends PanacheEntity> {
             int pageCount = (Math.toIntExact(count) + pageSize + 1) / pageSize;
             return createEntitiesResponse(list, search, pageSize, pageNumber, count, pageCount);
         } catch (SearchException ex) {
-            log.info("Method readAll threw a SearchException", ex);
+            Log.info("Method readAll threw a SearchException", ex);
             return Response.status(Status.CONFLICT).type(MediaType.TEXT_PLAIN).entity("Search pattern not accepted.").build();
         } catch (Exception ex) {
-            log.error("Method readTreeWithView cannot map!", ex);
+            Log.error("Method readTreeWithView cannot map!", ex);
             return Response.status(Status.SERVICE_UNAVAILABLE).type(MediaType.TEXT_PLAIN).entity("Please contact the administrator.").build();
         }
     }
