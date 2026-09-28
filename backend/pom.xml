@@ -22,7 +22,7 @@
     <lombok.version>1.18.10</lombok.version>
     <quarkus-plugin.version>1.2.0.CR1</quarkus-plugin.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
-    <surefire-plugin.version>3.0.0-M4</surefire-plugin.version>
+    <surefire-plugin.version>3.6.0</surefire-plugin.version>
     <docker-plugin.version>0.31.0</docker-plugin.version>
     <elasticsearch-plugin.version>6.14</elasticsearch-plugin.version>
     <jacoco-plugin.version>0.8.5</jacoco-plugin.version>
