@@ -14,6 +14,9 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <quarkus.platform.version>1.2.0.CR1</quarkus.platform.version>
+    <!-- Credentials for the throwaway integration-test database container -->
+    <it.db.user>tp_admin</it.db.user>
+    <it.db.password>integration-test-only</it.db.password>
     <elasticsearch-server.version>7.5.1</elasticsearch-server.version>
     <mockito.version>3.2.4</mockito.version>
     <lombok.version>1.18.10</lombok.version>
@@ -147,8 +150,8 @@
               <run>
                 <env>
                   <POSTGRES_DB>teamplanner</POSTGRES_DB>
-                  <POSTGRES_USER>tp_admin</POSTGRES_USER>
-                  <POSTGRES_PASSWORD>t3amp1anner</POSTGRES_PASSWORD>
+                  <POSTGRES_USER>${it.db.user}</POSTGRES_USER>
+                  <POSTGRES_PASSWORD>${it.db.password}</POSTGRES_PASSWORD>
                 </env>
                 <ports>
                   <port>5432:5432</port>

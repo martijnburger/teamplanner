@@ -2,6 +2,10 @@
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Database credentials for the local containers; override by exporting them first
+export TEAMPLANNER_DB_USER="${TEAMPLANNER_DB_USER:-tp_admin}"
+export TEAMPLANNER_DB_PASSWORD="${TEAMPLANNER_DB_PASSWORD:-$(openssl rand -hex 16)}"
+
 printf "[${BLUE}INFO${NC}] Stopping and removing kibana container if it exists"
 docker stop kibana || true && docker rm kibana || true
 printf "[${BLUE}INFO${NC}] Stopping and removing elasticsearch container if it exists"
@@ -13,7 +17,7 @@ docker network rm teamplanner || true
 printf "[${BLUE}INFO${NC}] Create teamplanner network"
 docker network create teamplanner
 printf "[${BLUE}INFO${NC}] Run and expose fresh postgres container id: "
-docker run --name postgres --net teamplanner -e POSTGRES_DB=teamplanner -e POSTGRES_USER=tp_admin -e POSTGRES_PASSWORD=t3amp1anner -p 5432:5432 -d postgres:12.1-alpine
+docker run --name postgres --net teamplanner -e POSTGRES_DB=teamplanner -e POSTGRES_USER="$TEAMPLANNER_DB_USER" -e POSTGRES_PASSWORD="$TEAMPLANNER_DB_PASSWORD" -p 5432:5432 -d postgres:12.1-alpine
 printf "[${BLUE}INFO${NC}] Run and expose fresh elasticsearch container id: "
 docker run --name elasticsearch --net teamplanner -e discovery.type=single-node -p 9200:9200 -p 9300:9300  -d elasticsearch:7.5.1
 printf "[${BLUE}INFO${NC}] Run and expose fresh kibana container id :"
