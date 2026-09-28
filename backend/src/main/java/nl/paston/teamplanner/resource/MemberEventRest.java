@@ -1,11 +1,10 @@
 package nl.paston.teamplanner.resource;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.UriBuilder;
 
-import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.mapper.orm.Search;
 
@@ -36,7 +35,7 @@ public class MemberEventRest extends AbstractRest<MemberEvent> {
 
     @Override
     SearchQuery<MemberEvent> getSearchQuery(String simpleQueryString) {
-        return Search.session(em).search(MemberEvent.class).predicate(SearchPredicateFactory::matchAll).toQuery();
+        return Search.session(em).search(MemberEvent.class).where(f -> f.matchAll()).toQuery();
     }
 
 }

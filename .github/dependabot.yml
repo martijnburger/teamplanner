@@ -4,15 +4,11 @@ updates:
     directory: /backend
     schedule:
       interval: weekly
-    # Major upgrades are done by hand (Quarkus 3, current Angular); drop this once they are in
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
   - package-ecosystem: npm
     directory: /frontend
     schedule:
       interval: weekly
-    # Major upgrades are done by hand (Quarkus 3, current Angular); drop this once they are in
+    # The Angular upgrade is done by hand; drop this once it is in
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]

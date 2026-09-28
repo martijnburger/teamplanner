@@ -2,17 +2,16 @@ package nl.paston.teamplanner.resource;
 
 import java.net.URI;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
 
-import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.mapper.orm.Search;
 
@@ -46,16 +45,15 @@ public class EventRest extends AbstractRest<Event> {
     @Override
     SearchQuery<Event> getSearchQuery(String simpleQueryString) {
         if (simpleQueryString == null || "".equals(simpleQueryString.trim())) {
-            return Search.session(em).search(Event.class).predicate(SearchPredicateFactory::matchAll).toQuery();
+            return Search.session(em).search(Event.class).where(f -> f.matchAll()).toQuery();
         }
-        return Search.session(em).search(Event.class).predicate(f -> f.simpleQueryString().field("name").matching(simpleQueryString)).toQuery();
+        return Search.session(em).search(Event.class).where(f -> f.simpleQueryString().field("name").matching(simpleQueryString)).toQuery();
     }
 
     @GET
     @Path("{id}/members")
     public Response findMemberEventsById(@PathParam("id") final Long id) {
-        String hql = "SELECT me FROM MemberEvent me WHERE me.event.id = " + id + "ORDER BY me.id";
-        PanacheQuery<MemberEvent> entities = MemberEvent.find(hql);
+        PanacheQuery<MemberEvent> entities = MemberEvent.find("event.id = ?1 order by id", id);
         return Response.ok(entities.list()).build();
     }
 

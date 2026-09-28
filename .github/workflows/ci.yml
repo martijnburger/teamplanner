@@ -13,11 +13,10 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
-      # Java 11 until the Quarkus upgrade; Lombok 1.18.10 does not run on newer JDKs
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '11'
+          java-version: '21'
           cache: maven
       - name: Build and unit test
         run: ./mvnw -B package

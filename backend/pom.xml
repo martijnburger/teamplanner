@@ -1,55 +1,46 @@
-<?xml version="1.0" ?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.paston</groupId>
   <artifactId>teamplanner-backend</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <packaging>quarkus</packaging>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <skipTests>false</skipTests>
-    <skipITs>${skipTests}</skipITs>
-    <skipUTs>${skipTests}</skipUTs>
-    <maven.compiler.parameters>true</maven.compiler.parameters>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <quarkus.platform.version>1.2.0.CR1</quarkus.platform.version>
-    <!-- Credentials for the throwaway integration-test database container -->
-    <it.db.user>tp_admin</it.db.user>
-    <it.db.password>integration-test-only</it.db.password>
-    <elasticsearch-server.version>7.5.1</elasticsearch-server.version>
-    <mockito.version>3.2.4</mockito.version>
-    <lombok.version>1.18.10</lombok.version>
-    <quarkus-plugin.version>1.2.0.CR1</quarkus-plugin.version>
-    <compiler-plugin.version>3.8.1</compiler-plugin.version>
-    <surefire-plugin.version>3.0.0-M4</surefire-plugin.version>
-    <docker-plugin.version>0.31.0</docker-plugin.version>
-    <elasticsearch-plugin.version>6.14</elasticsearch-plugin.version>
-    <jacoco-plugin.version>0.8.5</jacoco-plugin.version>
+    <maven.compiler.release>21</maven.compiler.release>
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+    <quarkus.platform.version>3.39.5</quarkus.platform.version>
+    <compiler-plugin.version>3.15.0</compiler-plugin.version>
+    <surefire-plugin.version>3.5.6</surefire-plugin.version>
+    <jacoco-plugin.version>0.8.15</jacoco-plugin.version>
+    <skipITs>true</skipITs>
     <sonar.sources>src/main</sonar.sources>
     <sonar.tests>src/test</sonar.tests>
     <!-- Sonar-JaCoCo properties -->
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-    <!-- <sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath> -->
-    <!-- <sonar.coverage.jacoco.xmlReportPaths>target/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths> -->
+    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <sonar.language>java</sonar.language>
   </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-bom</artifactId>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
         <version>${quarkus.platform.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy</artifactId>
+      <artifactId>quarkus-rest-jackson</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -61,14 +52,6 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jackson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-jackson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-health</artifactId>
     </dependency>
     <dependency>
@@ -77,144 +60,76 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-search-elasticsearch</artifactId>
+      <artifactId>quarkus-hibernate-search-orm-elasticsearch</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <scope>compile</scope>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-arc</artifactId>
     </dependency>
     <!-- Test dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-junit5</artifactId>
+      <artifactId>quarkus-junit</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>${mockito.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
-      <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <finalName>teamplanner</finalName>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${compiler-plugin.version}</version>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>quarkus-maven-plugin</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <extensions>true</extensions>
       </plugin>
       <plugin>
-        <!-- you need this specific version to integrate with the other build helpers -->
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler-plugin.version}</version>
+        <configuration>
+          <parameters>true</parameters>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire-plugin.version}</version>
         <configuration>
-          <skipTests>${skipUTs}</skipTests>
-          <forkCount>1</forkCount>
-          <reuseForks>true</reuseForks>
-          <systemProperties>
+          <argLine>@{argLine}</argLine>
+          <systemPropertyVariables>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-          </systemProperties>
+            <maven.home>${maven.home}</maven.home>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
       <plugin>
-        <!-- This is what injects the magic Quarkus bytecode -->
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-maven-plugin</artifactId>
-        <version>${quarkus-plugin.version}</version>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${surefire-plugin.version}</version>
         <executions>
           <execution>
             <goals>
-              <goal>build</goal>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>${docker-plugin.version}</version>
         <configuration>
-          <skip>${skipITs}</skip>
-          <images>
-            <image>
-              <name>postgres:12.1-alpine</name>
-              <alias>PostgreSQL</alias>
-              <run>
-                <env>
-                  <POSTGRES_DB>teamplanner</POSTGRES_DB>
-                  <POSTGRES_USER>${it.db.user}</POSTGRES_USER>
-                  <POSTGRES_PASSWORD>${it.db.password}</POSTGRES_PASSWORD>
-                </env>
-                <ports>
-                  <port>5432:5432</port>
-                </ports>
-                <log>
-                  <prefix>[%a] %z</prefix>
-                  <date>NONE</date>
-                  <color>MAGENTA</color>
-                </log>
-                <wait>
-                  <log>database system is ready to accept connections</log>
-                </wait>
-              </run>
-            </image>
-            <image>
-              <name>elasticsearch:7.5.1</name>
-              <alias>ElasticSearch</alias>
-              <run>
-                <env>
-                  <discovery.type>single-node</discovery.type>
-                </env>
-                <ports>
-                  <port>9200:9200</port>
-                  <port>9300:9300</port>
-                </ports>
-                <log>
-                  <prefix>[%a] %z</prefix>
-                  <date>NONE</date>
-                  <color>CYAN</color>
-                </log>
-                <!-- <wait>
-                  <log>database system is ready to accept connections</log>
-                </wait> -->
-              </run>
-            </image>
-          </images>
+          <argLine>@{argLine}</argLine>
+          <systemPropertyVariables>
+            <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+            <maven.home>${maven.home}</maven.home>
+          </systemPropertyVariables>
         </configuration>
-        <executions>
-          <execution>
-            <id>docker-start</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>stop</goal>
-              <goal>start</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>docker-stop</id>
-            <phase>post-integration-test</phase>
-            <goals>
-              <goal>stop</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco-plugin.version}</version>
-        <configuration>
-          <destFile>${sonar.jacoco.reportPath}</destFile>
-          <!-- <append>true</append> -->
-        </configuration>
         <executions>
           <execution>
             <id>default-prepare-agent</id>
@@ -236,54 +151,17 @@
 
   <profiles>
     <profile>
-      <!-- Optionally activate this profile to compile the demo into native! -->
       <id>native</id>
       <activation>
         <property>
           <name>native</name>
         </property>
       </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-maven-plugin</artifactId>
-            <version>${quarkus-plugin.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>native-image</goal>
-                </goals>
-                <configuration>
-                  <enableHttpUrlHandler>true</enableHttpUrlHandler>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <version>${surefire-plugin.version}</version>
-            <configuration>
-              <skipITs>${skipITs}</skipITs>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>integration-test</goal>
-                  <goal>verify</goal>
-                </goals>
-                <configuration>
-                  <systemProperties>
-                    <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-                  </systemProperties>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
+      <properties>
+        <quarkus.package.jar.enabled>false</quarkus.package.jar.enabled>
+        <skipITs>false</skipITs>
+        <quarkus.native.enabled>true</quarkus.native.enabled>
+      </properties>
     </profile>
   </profiles>
-
 </project>
