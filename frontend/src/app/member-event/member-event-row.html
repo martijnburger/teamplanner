@@ -1,0 +1,22 @@
+<button
+  matMiniFab
+  [class]="'status-' + status().color"
+  (click)="toggleAvailability()"
+  aria-label="Beschikbaarheid wijzigen"
+>
+  <mat-icon>{{ status().icon }}</mat-icon>
+</button>
+<span class="name">{{ member().name }}</span>
+@if (member().comment) {
+  <button
+    matIconButton
+    (click)="showComment()"
+    [matTooltip]="shortComment()"
+    matTooltipPosition="after"
+    aria-label="Opmerking bekijken"
+  >
+    <mat-icon>more_horiz</mat-icon>
+  </button>
+} @else {
+  <span class="spacer"></span>
+}

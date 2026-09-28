@@ -1,19 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
 html {
   min-height: 100vh;
-  background: url(/assets/background.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background: url('/background.jpg') no-repeat center center fixed;
   background-size: cover;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$violet-palette,
+        tertiary: mat.$yellow-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+  @include mat.dialog-overrides(
+    (
+      container-color: rgba(255, 255, 255, 0.8),
+    )
+  );
 }
 
 body {
-  margin: 0px;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color-scheme: light;
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
 }
 
-.mat-dialog-container {
-  background: rgba(255,255,255,0.8);
+// Round mini-fab buttons, with a color per status
+.mat-mdc-mini-fab {
+  @include mat.fab-overrides(
+    (
+      small-container-shape: 50%,
+    )
+  );
+}
+
+.status-primary {
+  @include mat.fab-overrides(
+    (
+      small-container-color: var(--mat-sys-primary),
+      small-foreground-color: var(--mat-sys-on-primary),
+    )
+  );
+}
+
+.status-accent {
+  @include mat.fab-overrides(
+    (
+      small-container-color: var(--mat-sys-tertiary-container),
+      small-foreground-color: var(--mat-sys-on-tertiary-container),
+    )
+  );
+}
+
+.status-warn {
+  @include mat.fab-overrides(
+    (
+      small-container-color: var(--mat-sys-error),
+      small-foreground-color: var(--mat-sys-on-error),
+    )
+  );
 }

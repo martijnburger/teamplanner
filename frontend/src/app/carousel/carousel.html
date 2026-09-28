@@ -1,0 +1,15 @@
+<button matIconButton [disabled]="isFirst()" (click)="previous()" aria-label="Vorige">
+  <mat-icon>chevron_left</mat-icon>
+</button>
+<div class="viewport">
+  <div class="track" [style.transform]="offset()">
+    @for (item of items(); track $index) {
+      <div class="slide">
+        <ng-container [ngTemplateOutlet]="item.template" />
+      </div>
+    }
+  </div>
+</div>
+<button matIconButton [disabled]="isLast()" (click)="next()" aria-label="Volgende">
+  <mat-icon>chevron_right</mat-icon>
+</button>

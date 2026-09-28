@@ -1,0 +1,11 @@
+@if (page.hasValue()) {
+  <teamplanner-carousel>
+    @for (event of events(); track event.id) {
+      <teamplanner-event-card *teamplannerCarouselItem [event]="event" />
+    }
+  </teamplanner-carousel>
+} @else if (page.error()) {
+  <p class="error">De evenementen konden niet worden geladen.</p>
+} @else {
+  <mat-spinner diameter="100" />
+}
