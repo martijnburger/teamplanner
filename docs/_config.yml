@@ -2,11 +2,11 @@ title: Teamplanner
 tagline: Get on board
 email: martijn@roeiploegutrecht.nl
 description: >-
-  Teamplanner is an open source project in progress. It is live 
-  coded on twitch.tv and it's goal is to provide a webapplication
-  that holds the planning for sportsteams.
-remote_theme: chrisrhymes/bulma-clean-theme
-url: https://www.teamplanner.net
+  Teamplanner is an open source project in progress. Its goal is to
+  provide a web application that holds the planning for sports teams.
+theme: bulma-clean-theme
+url: https://martijnburger.github.io
+baseurl: /teamplanner
 
 paginate: 5
 paginate_path: "/blog/page:num/"
@@ -14,8 +14,10 @@ disqus:
   shortname: martijn
 
 plugins:
-  - jekyll-remote-theme
+  - jekyll-feed
   - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-sitemap
 exclude:
   - .sass-cache/
   - .jekyll-cache/
@@ -29,11 +31,9 @@ exclude:
   - vendor/ruby/
 
 show_excerpts: true
-feed_icon: /assets/img/logo-small.png
 sass:
   style: compressed
   source_dir: _sass
-google_analytics: UA-153629949-1
 markdown: kramdown
 highlighter: rouge
 footer_menu: footer
@@ -42,7 +42,7 @@ defaults:
   - scope:
       path: ""
     values:
-      hero_image: "/assets/img/hero.jpeg"  
+      hero_image: "/teamplanner/assets/img/hero.jpeg"
       title: "Get on board"
       subtitle: "with Teamplanner!"
       show_sidebar: true

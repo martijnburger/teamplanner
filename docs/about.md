@@ -10,7 +10,7 @@ Teamplanner is an application that helps sporting clubs with multiple teams plan
 Method
 ------
 
-Of course we are using CI/CD for the project and we're running microservices on kubernetes. But if you're like me, you rather see that working than read about it. So I tried to create some basic user stories to kick off the project, and make sure that everyone can follow what I am doing. That way I hope to get some exposure for this project, as well as help and hints from other programmers. The project is open source, available on [github](https://github.com/martijnburger) and live coded on [twitch.tv](https://www.twitch.tv/martijnburger).
+The backend is a REST API built with [Quarkus](https://quarkus.io/) on Java, storing its data in PostgreSQL and searching it with Elasticsearch. The frontend is an [Angular](https://angular.dev/) app. Every change is built and tested automatically with GitHub Actions. But if you're like me, you rather see that working than read about it. So I tried to create some basic user stories to kick off the project, and make sure that everyone can follow what I am doing. That way I hope to get some exposure for this project, as well as help and hints from other programmers. The project is open source and available on [GitHub](https://github.com/martijnburger/teamplanner).
 
 About Roeiploeg Utrecht
 -----------------------
