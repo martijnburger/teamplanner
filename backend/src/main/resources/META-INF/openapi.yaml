@@ -145,7 +145,7 @@ paths:
         in: query
         schema:
           type: integer
-      - name: pattern
+      - name: search
         in: query
         schema:
           type: string

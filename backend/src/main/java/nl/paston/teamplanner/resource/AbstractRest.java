@@ -1,5 +1,6 @@
 package nl.paston.teamplanner.resource;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -48,6 +49,11 @@ public abstract class AbstractRest<T extends PanacheEntity> {
 
     abstract SearchQuery<T> getSearchQuery(String simpleQueryString);
 
+    abstract Class<T> getEntityClass();
+
+    /** Copies the fields a client may change with PUT or PATCH from {@code source} to {@code target}. */
+    abstract void copyFields(T source, T target);
+
     protected EntityManager em;
 
     @Inject
@@ -82,7 +88,7 @@ public abstract class AbstractRest<T extends PanacheEntity> {
             // Use the search, Luke!
             List<T> list = getSearchQuery(search).fetchHits((pageNumber - 1) * pageSize, pageSize);
             long count = getSearchQuery(search).fetchTotalHitCount();
-            int pageCount = (Math.toIntExact(count) + pageSize + 1) / pageSize;
+            int pageCount = pageCount(count, pageSize);
             return createEntitiesResponse(list, search, pageSize, pageNumber, count, pageCount);
         } catch (SearchException ex) {
             Log.info("Method readAll threw a SearchException", ex);
@@ -107,20 +113,32 @@ public abstract class AbstractRest<T extends PanacheEntity> {
     @Path("{id}")
     @Transactional
     public Response update(@PathParam("id") final Long id, final T entity) {
-        T managed = findById(id);
+        final T managed = findById(id);
         if (managed == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
-        managed = entity;
-        managed.persist();
-        return Response.ok().build();
+        copyFields(entity, managed);
+        // Serialize inside the transaction, lazy associations cannot be loaded after it
+        return Response.ok(mapper.valueToTree(managed)).build();
     }
 
     @PATCH
     @Path("{id}")
     @Transactional
-    public Response modify(@PathParam("id") final Long id, final T entity) {
-        return update(id, entity);
+    public Response modify(@PathParam("id") final Long id, final ObjectNode changes) {
+        final T managed = findById(id);
+        if (managed == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+        try {
+            // Apply the changes to a detached copy, then copy only the changeable fields back
+            final T copy = mapper.treeToValue(mapper.valueToTree(managed), getEntityClass());
+            final T patched = mapper.readerForUpdating(copy).readValue(changes);
+            copyFields(patched, managed);
+        } catch (IOException | IllegalArgumentException ex) {
+            return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity(ex.getMessage()).build();
+        }
+        return Response.ok(mapper.valueToTree(managed)).build();
     }
 
     @DELETE
@@ -135,12 +153,16 @@ public abstract class AbstractRest<T extends PanacheEntity> {
         return Response.noContent().build();
     }
 
-    private String buildUrlString(final String pattern, final int pageSize, final int pageNumber) {
-        return getUri().queryParam("pattern", pattern).queryParam("pageSize", pageSize)
+    static int pageCount(final long count, final int pageSize) {
+        return Math.toIntExact((count + pageSize - 1) / pageSize);
+    }
+
+    private String buildUrlString(final String search, final int pageSize, final int pageNumber) {
+        return getUri().queryParam("search", search).queryParam("pageSize", pageSize)
                 .queryParam("pageNumber", pageNumber).build().toString();
     }
 
-    public Response createEntitiesResponse(List<?> list, String pattern, int pageSize, int pageNumber, long count,
+    public Response createEntitiesResponse(List<?> list, String search, int pageSize, int pageNumber, long count,
             int pageCount) {
         final ObjectNode json = mapper.createObjectNode();
         json.set("items", mapper.valueToTree(list));
@@ -148,10 +170,10 @@ public abstract class AbstractRest<T extends PanacheEntity> {
         json.put("pageSize", pageSize);
         json.put("pageCount", pageCount);
         if (pageNumber > 1) {
-            json.put("previousPage", buildUrlString(pattern, pageSize, pageNumber - 1));
+            json.put("previousPage", buildUrlString(search, pageSize, pageNumber - 1));
         }
         if (pageNumber < pageCount) {
-            json.put("nextPage", buildUrlString(pattern, pageSize, pageNumber + 1));
+            json.put("nextPage", buildUrlString(search, pageSize, pageNumber + 1));
         }
         return Response.ok(json).build();
     }
