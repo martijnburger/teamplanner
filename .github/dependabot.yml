@@ -8,10 +8,13 @@ updates:
     directory: /frontend
     schedule:
       interval: weekly
-    # The Angular upgrade is done by hand; drop this once it is in
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
+    # Angular packages must be updated together
+    groups:
+      angular:
+        patterns:
+          - "@angular/*"
+          - "@angular-devkit/*"
+          - "angular-eslint"
   - package-ecosystem: bundler
     directory: /docs
     schedule:

@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+}
+
+h2 {
+  flex: 1;
+  margin: 0;
+  font-size: large;
+  font-weight: bolder;
+  text-align: center;
+  color: rgba(15, 15, 15, 0.9);
+}
+
+mat-spinner {
+  margin: 0 auto;
+}

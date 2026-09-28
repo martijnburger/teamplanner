@@ -1,0 +1,17 @@
+<header>
+  @if (event().planned) {
+    <button matMiniFab class="status-primary" aria-label="Gepland"><mat-icon>done</mat-icon></button>
+  } @else {
+    <button matMiniFab class="status-warn" aria-label="Niet gepland"><mat-icon>clear</mat-icon></button>
+  }
+  <h2>{{ event().date | date: 'longDate' }}<br />{{ event().name }}</h2>
+</header>
+@if (members.hasValue()) {
+  @for (member of members.value(); track member.id) {
+    <teamplanner-member-event-row [member]="member" />
+  }
+} @else if (members.error()) {
+  <p class="error">De deelnemers konden niet worden geladen.</p>
+} @else {
+  <mat-spinner diameter="50" />
+}

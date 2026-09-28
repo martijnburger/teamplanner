@@ -1,0 +1,43 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 45px;
+  border-radius: 20px 5px;
+  background-color: rgba(244, 67, 54, 0.87);
+  color: rgba(255, 255, 255, 0.87);
+  --mat-icon-button-icon-color: currentColor;
+}
+
+.name {
+  flex: 1;
+  text-align: center;
+}
+
+.spacer {
+  width: 48px;
+}
+
+:host(.rejected) {
+  background-color: rgba(244, 67, 54, 0.87);
+  color: rgba(255, 255, 255, 0.87);
+
+  .name {
+    text-decoration: line-through;
+  }
+}
+
+:host(.waiting) {
+  background-color: rgba(255, 215, 64, 0.87);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+:host(.accepted) {
+  background-color: rgba(103, 58, 183, 0.87);
+  color: rgba(255, 255, 255, 0.87);
+}
+
+:host(.skipped) {
+  background-color: rgba(244, 67, 54, 0.26);
+  color: rgba(255, 255, 255, 0.87);
+}

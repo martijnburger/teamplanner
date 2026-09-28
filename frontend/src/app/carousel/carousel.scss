@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px 8px;
+}
+
+.viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  transition: transform 250ms ease-in;
+}
+
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
