@@ -14,7 +14,7 @@
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.version>3.39.5</quarkus.platform.version>
     <compiler-plugin.version>3.15.0</compiler-plugin.version>
-    <surefire-plugin.version>3.5.6</surefire-plugin.version>
+    <surefire-plugin.version>3.6.1</surefire-plugin.version>
     <jacoco-plugin.version>0.8.15</jacoco-plugin.version>
     <skipITs>true</skipITs>
     <sonar.sources>src/main</sonar.sources>
